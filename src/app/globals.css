@@ -25,3 +25,9 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.video-container {
+  width: 300px;
+  height: 200px;
+  /* pointer-events: none; */
+}
