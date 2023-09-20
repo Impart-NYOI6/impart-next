@@ -19,8 +19,7 @@ export default function RootLayout({
     <html>
       <body className={inter.className}>
           <nav>
-            <Link href='/user'>User Page</Link>
-            
+            <Link href='/user'>User Page</Link>    
           </nav>
           {children}
       </body>

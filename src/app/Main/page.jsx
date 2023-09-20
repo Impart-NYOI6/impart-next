@@ -2,13 +2,30 @@
 import FeedItem from './components/FeedItem'
 // import Button from './components/Button'
 import React, { useState, useEffect } from 'react';
+import { supabase } from '../database'
 
 export default function() {
     const [categories, setCategories] = useState([]);
+    const [videos, setVideos] = useState([]);
 
-    useEffect(()=>{
-        //fetch from server here
-    },[categories])
+    useEffect(() => {
+        const getVideos = async () => {
+            const videoArray = [];
+            const { data, error } = await supabase
+            .from('Posts')
+            .select('*');
+            data?.forEach((obj) => {
+                if (obj.video_hosted_url) {
+                    videoArray.push(obj.video_hosted_url)
+                }
+            })
+            console.log(videoArray)
+            setVideos(videoArray)
+
+        }
+        getVideos();
+        
+    }, [categories])
     
     return (
         <div className="flex flex-col items-center mt-10 min-h-screen">
@@ -22,7 +39,8 @@ export default function() {
                 </div>
                 <div className="mx-auto">
                     VIDEO LIST HERE
-                    <FeedItem/>
+                    {/* map videos array to FeedItem here */}
+                    {videos.map((video)=>{return <FeedItem video={video}/>})}
                 </div>
             </div>
         </div>
