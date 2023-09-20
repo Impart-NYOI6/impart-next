@@ -1,7 +1,15 @@
+'use client'
 import FeedItem from './components/FeedItem'
-import Button from './components/Button'
+// import Button from './components/Button'
+import React, { useState, useEffect } from 'react';
 
 export default function() {
+    const [categories, setCategories] = useState([]);
+
+    useEffect(()=>{
+        //fetch from server here
+    },[categories])
+    
     return (
         <div className="flex flex-col items-center mt-10 min-h-screen">
             <div>TITLE</div>
