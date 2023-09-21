@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import FeedItem from './components/FeedItem'
 // import Button from './components/Button'
 import React, { useState, useEffect } from 'react';
@@ -10,6 +10,10 @@ import Comment from './components/Comment';
 // Modal.setAppElement(el);
 import Categories from './components/dropdowns/categories'
 import Industries from './components/dropdowns/industries'
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
+import { styled } from '@mui/material/styles';
 
 
 
@@ -72,11 +76,19 @@ export default function() {
         setCommentArray([]);
       };
 
+    const Item = styled(Paper)(({ theme }) => ({
+      backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+      ...theme.typography.body2,
+      padding: theme.spacing(1),
+      textAlign: 'center',
+      color: theme.palette.text.secondary,
+    }));
+      
 
     
     return (
         <div className="flex flex-col items-center mt-10 min-h-screen">
-            <div>TITLE</div>
+            <div>Impartables</div>
             <div className="flex justify-between w-full">
                 <div className="flex-col ml-4">
                     <Categories/>
@@ -119,7 +131,12 @@ export default function() {
             />
           <div className="text-black">
             <h2>Comments</h2>
-            {commentArray.map((comment) =>{return <Comment comment={comment.comment_text} />})}
+            {/* {commentArray.map((comment) =>{return <Comment comment={comment.comment_text} />})} */}
+            <Box sx={{ width: '100%' }}>
+              <Stack spacing={2}>
+              {commentArray.map((comment) =>{return <Item>{comment.comment_text}</Item>})}
+              </Stack>
+            </Box>
 
           </div>
           </div>
