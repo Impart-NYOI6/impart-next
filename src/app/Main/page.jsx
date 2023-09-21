@@ -8,6 +8,8 @@ import ReactPlayer from "react-player";
 import Comment from './components/Comment';
 // import fetch from 'node-fetch';
 // Modal.setAppElement(el);
+import Categories from './components/dropdowns/categories'
+import Industries from './components/dropdowns/industries'
 
 
 
@@ -59,22 +61,6 @@ export default function() {
       getComments();
     }, [selectedMovieID])
 
-
-    // const getComments = async () => {
-    //   const body = {posts: `${selectedMovieID}`};
-    //   console.log('body: ', body)
-    // // const response = await fetch('https://impart-server.onrender.com/getComments', {
-    // //   method: 'post',
-    // //   body: JSON.stringify(body),
-    // //   // headers: {'Content-Type': 'application/json'}
-    // // });
-    // // const data = await response.json();
-
-    // // console.log('data: ', data);
-    // };
-    
-    // getComments();
-
     const handleWatchNow = (movie) => {
         setSelectedMovie(movie);
         setModalIsOpen(true);
@@ -93,10 +79,8 @@ export default function() {
             <div>TITLE</div>
             <div className="flex justify-between w-full">
                 <div className="flex-col ml-4">
-                    <a className="block"><button>Click!</button></a>
-                    <a className="block"><button>Click!</button></a>
-                    <a className="block"><button>Click!</button></a>
-                    <a className="block"><button>Click!</button></a>
+                    <Categories/>
+                    <Industries/>
                 </div>
                 <div className="border-4 border-blue-500 rounded mx-auto space-y-5">
                     {videos.map((video)=>{return <FeedItem video={video} play={(url)=>{handleWatchNow(url)}} returnID={(id)=>{setSelectedMovieID(id)}} />})}
@@ -134,7 +118,7 @@ export default function() {
               className='bg-dark overflow-hidden'
             />
           <div className="text-black">
-            Responses
+            <h2>Comments</h2>
             {commentArray.map((comment) =>{return <Comment comment={comment.comment_text} />})}
 
           </div>
