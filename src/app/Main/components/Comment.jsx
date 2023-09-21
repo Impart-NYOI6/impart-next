@@ -2,7 +2,7 @@ export default function Comment (props){
 
     return (
         <div>
-            Be the first to respond
+            <h2>{props.comment}`</h2>
         </div> 
     )
 }

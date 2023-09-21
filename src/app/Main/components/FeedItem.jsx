@@ -6,20 +6,20 @@ export default function FeedItem (props){
     const [twoComments, setTwoComments] = useState([]);
     const videoRef = useRef(null);
     const videoID = props.video.id;
-    const postID = props.video.postID
-    console.log('postID: ', postID)
+    const postID = props.video.postID;
+    const sendID = props.returnID;
+   
     useEffect(()=>{
         const getTwoComments = async () => {
             const twoCommentArray = [];
-            const { data, error } = await supabase
+            // const { data, error } = await supabase
             // .from('Comments')
-            // .select(`${postID}`)
-            // .where(`${videoID}`)
-            // .limit(2);
-            .from('Comments')
-            .select('*')
-            .eq('post_id', `${postID}`);
+            // .select('*')
+            // .eq('post_id', `${postID}`);
             // .where(`${postID}`)
+
+
+
             data?.forEach((obj) => {
                 if (obj.comment_text) {
                     twoCommentArray.push({text: obj.comment_text, user: obj.user_id})
@@ -28,7 +28,7 @@ export default function FeedItem (props){
             setTwoComments(twoCommentArray)
 
         }
-        getTwoComments();
+        // getTwoComments();
     }, [])
 
 
@@ -37,7 +37,9 @@ export default function FeedItem (props){
             videoRef.current.pause();
         }
         // Call your existing function for fullscreen or any other logic
+        
         props.play(props.video.url);
+        sendID(postID)
     };
     
 
@@ -49,7 +51,7 @@ export default function FeedItem (props){
             </div>
             
             <button onClick={handleClick}>FULL SCREEN</button>
-            <Comment/>
+            {/* <Comment/> */}
         </div>
     )
 }

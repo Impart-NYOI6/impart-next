@@ -5,6 +5,9 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../database'
 import Modal from 'react-modal';
 import ReactPlayer from "react-player";
+import Comment from './components/Comment';
+// import fetch from 'node-fetch';
+// Modal.setAppElement(el);
 
 
 
@@ -14,6 +17,8 @@ export default function() {
     // const [videoComments, setVideoComments] = useState([])
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [selectedMovie, setSelectedMovie] = useState(null);
+    const [commentArray, setCommentArray] = useState([])
+    const [selectedMovieID, setSelectedMovieID] = useState(null);
 
     useEffect(() => {
         const getVideos = async () => {
@@ -35,6 +40,41 @@ export default function() {
         getVideos();
     }, [categories])
 
+    useEffect(() => {
+
+      const getComments = async () => {
+        const body = {posts: [`${selectedMovieID}`]};
+       
+        const response = await fetch('https://impart-server.onrender.com/getComments', {
+          method: 'post',
+          body: JSON.stringify(body),
+          headers: {'Content-Type': 'application/json'}
+        });
+        const data = await response.json();
+
+        console.log('data: ', data);
+        setCommentArray(data)
+      };
+      
+      getComments();
+    }, [selectedMovieID])
+
+
+    // const getComments = async () => {
+    //   const body = {posts: `${selectedMovieID}`};
+    //   console.log('body: ', body)
+    // // const response = await fetch('https://impart-server.onrender.com/getComments', {
+    // //   method: 'post',
+    // //   body: JSON.stringify(body),
+    // //   // headers: {'Content-Type': 'application/json'}
+    // // });
+    // // const data = await response.json();
+
+    // // console.log('data: ', data);
+    // };
+    
+    // getComments();
+
     const handleWatchNow = (movie) => {
         setSelectedMovie(movie);
         setModalIsOpen(true);
@@ -43,6 +83,7 @@ export default function() {
     const closeModal = () => {
         setModalIsOpen(false);
         setSelectedMovie(null);
+        setCommentArray([]);
       };
 
 
@@ -58,22 +99,12 @@ export default function() {
                     <a className="block"><button>Click!</button></a>
                 </div>
                 <div className="border-4 border-blue-500 rounded mx-auto space-y-5">
-                    VIDEO LIST HERE
-                    {/* map videos array to FeedItem here */}
-                    {videos.map((video)=>{return <FeedItem video={video} play={(url)=>{handleWatchNow(url)}}/>})}
+                    {videos.map((video)=>{return <FeedItem video={video} play={(url)=>{handleWatchNow(url)}} returnID={(id)=>{setSelectedMovieID(id)}} />})}
                 </div>
             </div>
-            <div>
-            <button
-                  className='btn btn-warning w-100 fw-bold'
-                  onClick={() => handleWatchNow('https://impart-video-storage-1.s3.amazonaws.com/data_encrypting%20%28720p%29.mp4')}
-                >
-                  {" "}
-                  Watch Now
-                </button>
-              </div>
+            
 
-            <Modal
+    <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel='Video Modal'
@@ -102,10 +133,14 @@ export default function() {
               controls={true}
               className='bg-dark overflow-hidden'
             />
-          <div>Responses</div>
+          <div className="text-black">
+            Responses
+            {commentArray.map((comment) =>{return <Comment comment={comment.comment_text} />})}
+
+          </div>
           </div>
         )}
-      </Modal>
+  </Modal>
 
 
 
