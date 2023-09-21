@@ -4,6 +4,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 
+
 export default function Tags(props) {
     const setCats = (event, value) => {
         const categories = props.categories(value);
@@ -11,6 +12,11 @@ export default function Tags(props) {
     const setInds = (event, value) => {
         const industries = props.industries(value);
     }
+
+   
+
+  
+      
 
   return (
     <Stack spacing={3} sx={{ width: 250 }}>
@@ -86,5 +92,6 @@ const industries = ['Education',
 'Wellness & Fitness',
 'Public Safety',
 'Public Administration'];
+  
 
 

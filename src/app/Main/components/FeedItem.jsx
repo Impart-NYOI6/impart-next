@@ -1,6 +1,9 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { supabase } from '../../database';
 import Comment from './Comment';
+import { IconButton } from '@mui/material';
+import FullscreenTwoToneIcon from '@mui/icons-material/FullscreenTwoTone';
+
 
 export default function FeedItem (props){
     const [twoComments, setTwoComments] = useState([]);
@@ -44,13 +47,18 @@ export default function FeedItem (props){
     
 
     return (
-        <div className="border-4 border-green-500 rounded">
+        <div className="mb-8 bg-gray-700 text-white p-4 rounded-md w-full max-w-md">
+            <div className="justify-end">
+                <IconButton  aria-label="open" onClick={handleClick}>
+                    <FullscreenTwoToneIcon color="primary"/>
+                </IconButton>
+            </div>
             <div className="flex">
                 <div className="feeditem"><video ref={videoRef} controls src={props.video.url} className="video-container" /></div>
-                <div className="items-center justify-center"><p>Question Summary</p></div>
+                {/* <div className="items-center justify-center"><p>Question Summary</p></div> */}
             </div>
-            
-            <button onClick={handleClick}>FULL SCREEN</button>
+           
+            {/* <button onClick={handleClick}>FULL SCREEN</button> */}
             {/* <Comment/> */}
         </div>
     )

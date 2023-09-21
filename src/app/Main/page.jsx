@@ -39,15 +39,13 @@ export default function() {
           const response = await fetch('https://impart-server.onrender.com/posts');
 
           const data = await response.json();
-
-          console.log('data: ', data);
-
           data?.forEach((obj) => {
             if (obj.video_hosted_url) {
   
                 videoArray.push({url: obj.video_hosted_url, id: obj.id, postID: obj.post_id})
             }
           })
+          
           setVideos(videoArray)
         } else {
           const response = await fetch('https://impart-server.onrender.com/getPostsByCriteria', {
@@ -64,7 +62,7 @@ export default function() {
                 videoArray.push({url: obj.video_hosted_url, id: obj.id, postID: obj.post_id})
             }
           })
-  
+          
           setVideos(videoArray)
         }
        
@@ -73,28 +71,6 @@ export default function() {
       };
       
       getVideos();
-        // const getVideos = async () => {
-        //       // /getPostsByCriteria
-        //       // {
-        //       //     "industries" : ["Software & IT Services","Retail"],
-        //       //     "categories" : ["Career Development"]
-        //       // }
-        //     const videoArray = [];
-            
-        //     const { data, error } = await supabase
-        //     .from('Posts')
-        //     .select('*');
-        //     data?.forEach((obj) => {
-        //         if (obj.video_hosted_url) {
-        //           // console.log('obj.post_id: ', obj.post_id)
-        //             videoArray.push({url: obj.video_hosted_url, id: obj.id, postID: obj.post_id})
-        //         }
-        //     })
-        //     // console.log(videoArray)
-        //     setVideos(videoArray)
-
-        // }
-        // getVideos();
     }, [categories, industries])
 
     useEffect(() => {
@@ -138,13 +114,14 @@ export default function() {
 
     
     return (
-        <div className="flex flex-col items-center mt-10 min-h-screen">
-            <div>Impartables</div>
-            <div className="flex justify-between w-full">
+        <div className="flex min-h-screen flex-col items-center justify-between p-24 bg-gray">
+            
+            <div className="flex justify-between w-full flex-start">
                 <div className="flex-col ml-4">
                     <Dropdown inds={industries} cats={categories} categories={(catArr)=>{setCategories(catArr)}} industries={(indArr)=>{setIndustries(indArr)}}/>
                 </div>
-                <div className="border-4 border-blue-500 rounded mx-auto space-y-5">
+                <div className="mx-auto space-y-5 items-center">
+                  <div>Impartables</div>
                     {videos.map((video)=>{return <FeedItem video={video} play={(url)=>{handleWatchNow(url)}} returnID={(id)=>{setSelectedMovieID(id)}} />})}
                 </div>
             </div>
@@ -184,7 +161,9 @@ export default function() {
             {/* {commentArray.map((comment) =>{return <Comment comment={comment.comment_text} />})} */}
             <Box sx={{ width: '100%' }}>
               <Stack spacing={2}>
-              {commentArray.map((comment) =>{return <Item>{comment.comment_text}</Item>})}
+              {commentArray.map((comment) =>{
+                console.log('comment: ', comment)
+                return <Item>{comment.comment_text}</Item>})}
               </Stack>
             </Box>
 
@@ -192,10 +171,6 @@ export default function() {
           </div>
         )}
   </Modal>
-
-
-
-
         </div>
     )
 }
