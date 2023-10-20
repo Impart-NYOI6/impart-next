@@ -16,6 +16,7 @@
     "@mui/material": "^5.14.10",
     "@supabase/supabase-js": "^2.36.0",
     "next": "^13.5.1",
+    "next-auth": "^4.24.3",
     "node-fetch": "^3.3.2",
     "react-modal": "^3.16.1",
     "react-player": "^2.13.0",
